@@ -98,7 +98,9 @@ static ArrayList <Card> deck = new ArrayList <Card>(); // create the array
 					rank = i%13;
 					break;
 				} // set the face and rank			
-				deck.add(new Card(rank, suit, face)); // add each card
+				deck.add(new Card(rank, suit, face)); // add each card	
 			}
+		        deck.add(new Card(14, "", "black-and-white joker"));
+		        deck.add(new Card(15, "", "colored joker"));
 	}	
 	}
