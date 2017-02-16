@@ -87,17 +87,28 @@ public class Main
 					
 					for(int i = 0; i < input.length; i++){
 						if(Integer.parseInt(input[i])>=1 && Integer.parseInt(input[i])<=player1.size()){} //Need to have a solution for letters input
-						else{System.out.println("Illegal input!"); play();}
+						else{Rules.illegal();}
 					}//Check for illegal input
 					
 					if(a.size()==0){
-						for(int i = 0; i < input.length; i++){
-							a.add(player1.get(Integer.parseInt(input[i])-1));
-						} //Pass selected cards to arraylist a
+						if(Rules.check()==0){
+							for(int i = 0; i < input.length; i++){
+								a.add(player1.get(Integer.parseInt(input[i])-1));
+							} //Pass selected cards to arraylist a
+						} else {
+							Rules.illegal();
+						}
+						
 					} else {
-						for(int i = 0; i < input.length; i++){
-							b.add(player1.get(Integer.parseInt(input[i])-1));
-						} //Pass selected cards to arraylist b
+						if(input.length==a.size() || input.length==4){ // joker bomb
+							for(int i = 0; i < input.length; i++){
+								b.add(player1.get(Integer.parseInt(input[i])-1));
+							} //Pass selected cards to arraylist b
+							Rules.o();
+						} else {
+							Rules.illegal();
+						}
+						
 						
 					}
 					
