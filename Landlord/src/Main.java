@@ -8,6 +8,8 @@ public class Main
 		static ArrayList <Card> player3 = new ArrayList <Card>();
 		static ArrayList <Card> a = new ArrayList <Card>();
 		static ArrayList <Card> b = new ArrayList <Card>();
+		static boolean win = false;
+		static int pass = 0;
 		public static void main(String[] args)
 			{
 				SetDeck.generateDeck();
@@ -15,6 +17,7 @@ public class Main
 				deal();
 				greeting(); 
 				play();
+				
 //				for(int i = 0; i < 52; i++)
 //				{
 //					System.out.println(i + " = " + SetDeck.deck.get(i).getFace() + " of " + SetDeck.deck.get(i).getSuit() + " rank = " + SetDeck.deck.get(i).getRank());
@@ -24,6 +27,15 @@ public class Main
 //				System.out.println(c.getFace());
 //			}
 			}
+		
+		public static void rerun(){
+			SetDeck.generateDeck();
+			Collections.shuffle(SetDeck.deck);
+			deal();
+			System.out.println("You have started a new round!");
+			delay();
+			play();
+		}
 		
 		public static void greeting(){
 			Calendar cal = Calendar.getInstance();
@@ -67,7 +79,7 @@ public class Main
 		}
 		
 		public static void play(){
-			while(player1.size()>0){
+			while(!win){
 				int counter = 1;
 				System.out.println("Here are the cards you have rigth now:");
 				for (Card c: player1){
@@ -111,14 +123,15 @@ public class Main
 						
 						
 					}
-					
-					
+						
 					for(int i = input.length-1; i>=0; i--){
 						player1.remove(Integer.parseInt(input[i])-1);
 					}//remove selected cards from player arraylist
 				}				
 				delay();
 				System.out.println();
+				Rules.checkwin();
+				Rules.checkPass();
 			}
 		}
 		

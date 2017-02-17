@@ -1,3 +1,4 @@
+import java.util.Scanner;
 
 public class Rules
 	{
@@ -25,7 +26,7 @@ public class Rules
 				}
 				if(Main.b.size()==4){
 					if(Main.b.get(0).getFace().equals(Main.b.get(1).getFace()) && Main.b.get(1).getFace().equals(Main.b.get(2).getFace()) &&  Main.b.get(1).getFace().equals(Main.b.get(2).getFace()) && Main.b.get(2).getFace().equals(Main.b.get(3).getFace())){
-						System.out.println("Wow!" + Main.b.get(0).getFace() + "bomb! You can start the new round.");
+						System.out.println("Wow! " + Main.b.get(0).getFace() + " bomb! You can start the new round.");
 						removea();
 						removeb();
 					}
@@ -77,6 +78,34 @@ public class Rules
 		public static void replace(){
 			for(int i = 0; i < Main.b.size(); i++){
 				Main.a.add(Main.b.get(i));
+			}
+		}
+		
+		public static void checkwin(){
+			if(Main.player1.size()==0){
+				Main.win = true;
+				System.out.println("You have no cards left, you just won the game!");
+				System.out.println("Do you want to play again? Type \"Yes\" to continue, anything else to exit.");			
+			}
+			if(Main.player2.size()==0 || Main.player3.size()==0){Main.win = true; System.out.println("A bot just won the game... Better luck next time.");}	
+			Scanner userInput = new Scanner(System.in);
+			String keepPlaying = userInput.nextLine();
+			if (keepPlaying.equalsIgnoreCase("Yes")){
+				Main.rerun();
+			} else if (keepPlaying.equalsIgnoreCase("No")){
+				System.out.println("Thanks for playing, " + Main.name + ". Hope to see you soon, bye!");
+				System.exit(0);
+			} else {
+				System.out.println("Illegal input! Please type \"Yes\" or \"No\", " + Main.name + ".");
+				checkwin();
+			}
+		}
+		
+		public static void checkPass(){
+			if(Main.pass==2){
+				removea();
+				removeb();
+				System.out.println("All players passed, next person can lead a new round!");
 			}
 		}
 	}
