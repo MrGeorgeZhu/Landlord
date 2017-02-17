@@ -91,7 +91,7 @@ public class Main
 					}//Check for illegal input
 					
 					if(a.size()==0){
-						if(Rules.check()==0){
+						if(Rules.check()==1){
 							for(int i = 0; i < input.length; i++){
 								a.add(player1.get(Integer.parseInt(input[i])-1));
 							} //Pass selected cards to arraylist a
@@ -100,7 +100,7 @@ public class Main
 						}
 						
 					} else {
-						if(input.length==a.size() || input.length==4){ // joker bomb
+						if(input.length==a.size() || input.length==4){ // add joker bomb case
 							for(int i = 0; i < input.length; i++){
 								b.add(player1.get(Integer.parseInt(input[i])-1));
 							} //Pass selected cards to arraylist b

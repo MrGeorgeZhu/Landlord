@@ -16,6 +16,20 @@ public class Rules
 				    	illegal();
 				    }
 				}
+				if(Main.b.size()==3){
+					if(Main.b.get(0).getFace().equals(Main.b.get(1).getFace()) && Main.b.get(1).getFace().equals(Main.b.get(2).getFace()) && Main.b.get(0).getRank()>Main.a.get(0).getRank()){
+						removea();
+						replace();
+						removeb();
+					} else {illegal();}
+				}
+				if(Main.b.size()==4){
+					if(Main.b.get(0).getFace().equals(Main.b.get(1).getFace()) && Main.b.get(1).getFace().equals(Main.b.get(2).getFace()) &&  Main.b.get(1).getFace().equals(Main.b.get(2).getFace()) && Main.b.get(2).getFace().equals(Main.b.get(3).getFace())){
+						System.out.println("Wow!" + Main.b.get(0).getFace() + "bomb! You can start the new round.");
+						removea();
+						removeb();
+					}
+				}
 			}
 			
 		public static int check(){
