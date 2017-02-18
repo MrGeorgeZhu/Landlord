@@ -8,6 +8,7 @@ public class Main
 		static ArrayList <Card> player3 = new ArrayList <Card>();
 		static ArrayList <Card> a = new ArrayList <Card>();
 		static ArrayList <Card> b = new ArrayList <Card>();
+		static ArrayList <Card> c = new ArrayList <Card>();
 		static boolean win = false;
 		static int pass = 0;
 		public static void main(String[] args)
@@ -94,13 +95,21 @@ public class Main
 				Scanner userInput = new Scanner(System.in);
 				String temp = userInput.nextLine();
 				
-				if(temp.equalsIgnoreCase("pass")){} else {
+				if(temp.equalsIgnoreCase("pass")){pass++;} else {
 					String[] input = temp.split(",");
 					
 					for(int i = 0; i < input.length; i++){
 						if(Integer.parseInt(input[i])>=1 && Integer.parseInt(input[i])<=player1.size()){} //Need to have a solution for letters input
-						else{Rules.illegal();}
+						else{
+							System.out.println("Error code: 2b");
+							Rules.illegal();
+								
+						}
 					}//Check for illegal input
+					
+					for(int i = 0; i < input.length; i++){
+						c.add(player1.get(Integer.parseInt(input[i])-1));
+					}//pass cards to arraylist c
 					
 					if(a.size()==0){
 						if(Rules.check()==1){
@@ -108,7 +117,9 @@ public class Main
 								a.add(player1.get(Integer.parseInt(input[i])-1));
 							} //Pass selected cards to arraylist a
 						} else {
+							System.out.println("Error code: 3b");
 							Rules.illegal();
+							
 						}
 						
 					} else {
@@ -118,12 +129,19 @@ public class Main
 							} //Pass selected cards to arraylist b
 							Rules.o();
 						} else {
+							System.out.println("Error code: 4b");
 							Rules.illegal();
 						}
 						
 						
 					}
-						
+					
+					System.out.println();
+					System.out.println("You put down:");
+					for(int i = 0; i < input.length; i++){
+						System.out.println(player1.get(Integer.parseInt(input[i])-1).getFace() + " of " + player1.get(Integer.parseInt(input[i])-1).getSuit());
+					} //print cards put down
+					
 					for(int i = input.length-1; i>=0; i--){
 						player1.remove(Integer.parseInt(input[i])-1);
 					}//remove selected cards from player arraylist
@@ -132,6 +150,51 @@ public class Main
 				System.out.println();
 				Rules.checkwin();
 				Rules.checkPass();
+				int counter1 = 0;
+				System.out.println("a:");
+				for (Card c: a){
+					if(c.getRank()==14 || c.getRank()==15){
+						System.out.println(counter1 + ". " + c.getFace());
+					} else {
+						System.out.println(counter1 + ". " + c.getFace() + " of " + c.getSuit());
+					}											
+					counter1++;
+				}
+				counter1=0;
+				System.out.println("b:");
+				for (Card c: b){
+					if(c.getRank()==14 || c.getRank()==15){
+						System.out.println(counter1 + ". " + c.getFace());
+					} else {
+						System.out.println(counter1 + ". " + c.getFace() + " of " + c.getSuit());
+					}											
+					counter1++;
+				}
+				
+				AI.player2AI();
+				
+				counter=0;
+				System.out.println("a:");
+				for (Card c: a){
+					if(c.getRank()==14 || c.getRank()==15){
+						System.out.println(counter1 + ". " + c.getFace());
+					} else {
+						System.out.println(counter1 + ". " + c.getFace() + " of " + c.getSuit());
+					}											
+					counter1++;
+				}
+				counter1=0;
+				System.out.println("b:");
+				for (Card c: b){
+					if(c.getRank()==14 || c.getRank()==15){
+						System.out.println(counter1 + ". " + c.getFace());
+					} else {
+						System.out.println(counter1 + ". " + c.getFace() + " of " + c.getSuit());
+					}											
+					counter1++;
+				}
+				
+				//AI.player3AI();
 			}
 		}
 		

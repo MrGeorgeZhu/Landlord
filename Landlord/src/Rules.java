@@ -3,7 +3,16 @@ import java.util.Scanner;
 public class Rules
 	{
 		public static void o(){				
-				if (Main.b.size()==1){if(Main.b.get(0).getRank()>Main.a.get(0).getRank()){Main.a.remove(0); Main.a.add(Main.b.get(0)); Main.b.remove(0);}else{illegal();}}
+				if (Main.b.size()==1){
+					if(Main.b.get(0).getRank()>Main.a.get(0).getRank()){
+					Main.a.remove(0);
+					Main.a.add(Main.b.get(0)); 
+					Main.b.remove(0);
+					} else {
+					System.out.println("Error code: 5b");
+					illegal();
+					}
+				}
 				if (Main.b.size()==2){
 					if(Main.b.get(0).getFace().equals(Main.b.get(1).getFace()) && Main.b.get(0).getRank()>Main.a.get(0).getRank()){
 						removea();
@@ -14,15 +23,19 @@ public class Rules
 				    	removea();
 				    	removeb();
 				    } else {
-				    	illegal();
-				    }
-				}
+				    	System.out.println("Error code: 6b");
+				    	illegal();				    
+				    	}
+				} 
 				if(Main.b.size()==3){
 					if(Main.b.get(0).getFace().equals(Main.b.get(1).getFace()) && Main.b.get(1).getFace().equals(Main.b.get(2).getFace()) && Main.b.get(0).getRank()>Main.a.get(0).getRank()){
 						removea();
 						replace();
 						removeb();
-					} else {illegal();}
+					} else {
+						System.out.println("Error code: 1b");
+						illegal();				
+					}
 				}
 				if(Main.b.size()==4){
 					if(Main.b.get(0).getFace().equals(Main.b.get(1).getFace()) && Main.b.get(1).getFace().equals(Main.b.get(2).getFace()) &&  Main.b.get(1).getFace().equals(Main.b.get(2).getFace()) && Main.b.get(2).getFace().equals(Main.b.get(3).getFace())){
@@ -34,44 +47,63 @@ public class Rules
 			}
 			
 		public static int check(){
-			if(Main.a.size()==2){
-				if(Main.a.get(0).getFace().equals(Main.a.get(1).getFace())){
+			if(Main.c.size()==1){
+				removec();
+				return 1;
+			}
+			if(Main.c.size()==2){
+				if(Main.c.get(0).getFace().equals(Main.c.get(1).getFace())){
+					removec();
 					return 1;
-				} else if((Main.a.get(0).getRank() == 14 || Main.a.get(0).getRank() == 15) && (Main.a.get(1).getRank() == 14 || Main.a.get(1).getRank() == 15)){
+				} else if((Main.c.get(0).getRank() == 14 || Main.c.get(0).getRank() == 15) && (Main.c.get(1).getRank() == 14 || Main.c.get(1).getRank() == 15)){
+					removec();
 					return 1;
 				} else{
+					removec();
 					return 0;
 				}					
-			} else if (Main.a.size()==3 && Main.a.get(0).getFace().equals(Main.a.get(1).getFace()) && Main.a.get(1).getFace().equals(Main.a.get(2).getFace())){
+			} else if (Main.c.size()==3 && Main.c.get(0).getFace().equals(Main.c.get(1).getFace()) && Main.c.get(1).getFace().equals(Main.c.get(2).getFace())){
+				removec();
 				return 1;			
-			} else if(Main.a.size()==4 && Main.a.get(0).getFace().equals(Main.a.get(1).getFace()) && Main.a.get(1).getFace().equals(Main.a.get(2).getFace()) &&  Main.a.get(1).getFace().equals(Main.a.get(2).getFace()) && Main.a.get(2).getFace().equals(Main.a.get(3).getFace())){
+			} else if(Main.c.size()==4 && Main.c.get(0).getFace().equals(Main.c.get(1).getFace()) && Main.c.get(1).getFace().equals(Main.c.get(2).getFace()) &&  Main.c.get(1).getFace().equals(Main.c.get(2).getFace()) && Main.c.get(2).getFace().equals(Main.c.get(3).getFace())){
+				removec();
 				return 1;
 			} else {
-				removea();
+				removec();
 			    return 0;
-			}
+			}			
 		}
 		
 		public static void illegal(){
-			System.out.println("Illegal!"); 
+			System.out.println("Illegal!");
+			Main.delay();
+			System.out.println();
 			System.out.println("Here are the moves you could make:");
 			System.out.println("1. Single");
 			System.out.println("2. Double(2 of a kind)");
 			System.out.println("3. Trio(3 of a kind)");
 			System.out.println("4. Bomb(4 of a kind or 2 jokers)");
-			Main.delay(); 
-			Main.play();
+			Main.delay();
+			System.out.println();
+			Main.play(); 
+			System.out.println();
 		}
 		
 		public static void removea(){
 			for(int i = 0; i < Main.a.size(); i++){
-	    		Main.a.remove(i);
+	    		Main.a.remove(0);
 	    	}
 		}
 		
 		public static void removeb(){
 			for(int i = 0; i < Main.b.size(); i++){
-	    		Main.b.remove(i);
+	    		Main.b.remove(0);
+	    	}
+		}
+		
+		public static void removec(){
+			for(int i = 0; i < Main.c.size(); i++){
+	    		Main.c.remove(0);
 	    	}
 		}
 		
@@ -85,9 +117,13 @@ public class Rules
 			if(Main.player1.size()==0){
 				Main.win = true;
 				System.out.println("You have no cards left, you just won the game!");
-				System.out.println("Do you want to play again? Type \"Yes\" to continue, anything else to exit.");			
+				System.out.println("Do you want to play again? Type \"Yes\" to continue, \"No\"to exit.");
+				checkContinue();
 			}
-			if(Main.player2.size()==0 || Main.player3.size()==0){Main.win = true; System.out.println("A bot just won the game... Better luck next time.");}	
+			if(Main.player2.size()==0 || Main.player3.size()==0){Main.win = true; System.out.println("A bot just won the game... Better luck next time."); checkContinue();}	
+		}
+		
+		public static void checkContinue(){
 			Scanner userInput = new Scanner(System.in);
 			String keepPlaying = userInput.nextLine();
 			if (keepPlaying.equalsIgnoreCase("Yes")){
@@ -97,7 +133,7 @@ public class Rules
 				System.exit(0);
 			} else {
 				System.out.println("Illegal input! Please type \"Yes\" or \"No\", " + Main.name + ".");
-				checkwin();
+				checkContinue();
 			}
 		}
 		
