@@ -9,6 +9,7 @@ public class Rules
 					Main.a.add(Main.b.get(0)); 
 					Main.b.remove(0);
 					} else {
+					sysoarray();
 					System.out.println("Error code: 5b");
 					illegal();
 					}
@@ -23,6 +24,7 @@ public class Rules
 				    	removea();
 				    	removeb();
 				    } else {
+				    	sysoarray();
 				    	System.out.println("Error code: 6b");
 				    	illegal();				    
 				    	}
@@ -33,6 +35,7 @@ public class Rules
 						replace();
 						removeb();
 					} else {
+						sysoarray();
 						System.out.println("Error code: 1b");
 						illegal();				
 					}
@@ -78,13 +81,15 @@ public class Rules
 			System.out.println("Illegal!");
 			Main.delay();
 			System.out.println();
-			System.out.println("Here are the moves you could make:");
+			System.out.println("Here are some suggestions:");
 			System.out.println("1. Single");
 			System.out.println("2. Double(2 of a kind)");
 			System.out.println("3. Trio(3 of a kind)");
 			System.out.println("4. Bomb(4 of a kind or 2 jokers)");
+			System.out.println("The move you make have to follow the previous pattern and be bigger than it.");
 			Main.delay();
 			System.out.println();
+			removeb();
 			Main.play(); 
 			System.out.println();
 		}
@@ -120,7 +125,8 @@ public class Rules
 				System.out.println("Do you want to play again? Type \"Yes\" to continue, \"No\"to exit.");
 				checkContinue();
 			}
-			if(Main.player2.size()==0 || Main.player3.size()==0){Main.win = true; System.out.println("A bot just won the game... Better luck next time."); checkContinue();}	
+			if(Main.player2.size()==0){Main.win = true; System.out.println("Player2 bot just won the game... Better luck next time."); checkContinue();}
+			if(Main.player3.size()==0){Main.win = true; System.out.println("Player3 bot just won the game... Better luck next time."); checkContinue();}
 		}
 		
 		public static void checkContinue(){
@@ -141,7 +147,31 @@ public class Rules
 			if(Main.pass==2){
 				removea();
 				removeb();
-				System.out.println("All players passed, next person can lead a new round!");
+				System.out.println("All players have passed. Nobody has bigger cards. The next person can lead a new round!");
+				System.out.println();
+			}
+		}
+		
+		public static void sysoarray(){
+			int counter1=0;
+			System.out.print("a: ");
+			for (Card c: Main.a){
+				if(c.getRank()==14 || c.getRank()==15){
+					System.out.println(counter1 + ". " + c.getFace());
+				} else {
+					System.out.println(counter1 + ". " + c.getFace() + " of " + c.getSuit());
+				}											
+				counter1++;
+			}
+			counter1=0;
+			System.out.print("b: ");
+			for (Card c: Main.b){
+				if(c.getRank()==14 || c.getRank()==15){
+					System.out.println(counter1 + ". " + c.getFace());
+				} else {
+					System.out.println(counter1 + ". " + c.getFace() + " of " + c.getSuit());
+				}											
+				counter1++;
 			}
 		}
 	}

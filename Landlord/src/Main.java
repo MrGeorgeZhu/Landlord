@@ -16,7 +16,7 @@ public class Main
 				SetDeck.generateDeck();
 				Collections.shuffle(SetDeck.deck);
 				deal();
-				greeting(); 
+				//greeting(); 
 				play();
 				
 //				for(int i = 0; i < 52; i++)
@@ -123,15 +123,15 @@ public class Main
 						}
 						
 					} else {
-						if(input.length==a.size() || input.length==4){ // add joker bomb case
+						//if(input.length==a.size() || input.length==4 || input.length==2){
 							for(int i = 0; i < input.length; i++){
 								b.add(player1.get(Integer.parseInt(input[i])-1));
 							} //Pass selected cards to arraylist b
 							Rules.o();
-						} else {
-							System.out.println("Error code: 4b");
-							Rules.illegal();
-						}
+						//} else {
+						//	System.out.println("Error code: 4b");
+						//	Rules.illegal();
+						//}
 						
 						
 					}
@@ -139,7 +139,11 @@ public class Main
 					System.out.println();
 					System.out.println("You put down:");
 					for(int i = 0; i < input.length; i++){
-						System.out.println(player1.get(Integer.parseInt(input[i])-1).getFace() + " of " + player1.get(Integer.parseInt(input[i])-1).getSuit());
+						if(player1.get(Integer.parseInt(input[i])-1).getRank()==14 || player1.get(Integer.parseInt(input[i])-1).getRank()==15){
+							System.out.println(player1.get(Integer.parseInt(input[i])-1).getFace());
+						} else {
+							System.out.println(player1.get(Integer.parseInt(input[i])-1).getFace() + " of " + player1.get(Integer.parseInt(input[i])-1).getSuit());
+						}
 					} //print cards put down
 					
 					for(int i = input.length-1; i>=0; i--){
@@ -150,49 +154,8 @@ public class Main
 				System.out.println();
 				Rules.checkwin();
 				Rules.checkPass();
-				int counter1 = 0;
-				System.out.println("a:");
-				for (Card c: a){
-					if(c.getRank()==14 || c.getRank()==15){
-						System.out.println(counter1 + ". " + c.getFace());
-					} else {
-						System.out.println(counter1 + ". " + c.getFace() + " of " + c.getSuit());
-					}											
-					counter1++;
-				}
-				counter1=0;
-				System.out.println("b:");
-				for (Card c: b){
-					if(c.getRank()==14 || c.getRank()==15){
-						System.out.println(counter1 + ". " + c.getFace());
-					} else {
-						System.out.println(counter1 + ". " + c.getFace() + " of " + c.getSuit());
-					}											
-					counter1++;
-				}
 				
 				AI.player2AI();
-				
-				counter=0;
-				System.out.println("a:");
-				for (Card c: a){
-					if(c.getRank()==14 || c.getRank()==15){
-						System.out.println(counter1 + ". " + c.getFace());
-					} else {
-						System.out.println(counter1 + ". " + c.getFace() + " of " + c.getSuit());
-					}											
-					counter1++;
-				}
-				counter1=0;
-				System.out.println("b:");
-				for (Card c: b){
-					if(c.getRank()==14 || c.getRank()==15){
-						System.out.println(counter1 + ". " + c.getFace());
-					} else {
-						System.out.println(counter1 + ". " + c.getFace() + " of " + c.getSuit());
-					}											
-					counter1++;
-				}
 				
 				//AI.player3AI();
 			}
