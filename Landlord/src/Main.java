@@ -10,13 +10,10 @@ public class Main
 		static ArrayList <Card> b = new ArrayList <Card>();
 		static ArrayList <Card> c = new ArrayList <Card>();
 		static boolean win = false;
-		static int pass = 0;
+		static ArrayList <Integer> pass = new ArrayList <Integer>();
 		public static void main(String[] args)
-			{
-				SetDeck.generateDeck();
-				Collections.shuffle(SetDeck.deck);
-				deal();
-				//greeting(); 
+			{		
+			    greeting(); 
 				play();
 				
 //				for(int i = 0; i < 52; i++)
@@ -30,10 +27,28 @@ public class Main
 			}
 		
 		public static void rerun(){
+			Rules.removea();
+			Rules.removeb();
+			int temp = player1.size();
+			for(int i = 0; i < temp; i++){
+	    		player1.remove(0);
+	    	}
+			temp = player2.size();
+			for(int i = 0; i < temp; i++){
+	    		player2.remove(0);
+	    	}
+			temp = player3.size();
+			for(int i = 0; i < temp; i++){
+	    		player3.remove(0);
+	    	}
+			temp = SetDeck.deck.size();
+			for(int i = 0; i < temp; i++){
+	    		SetDeck.deck.remove(0);
+	    	}
 			SetDeck.generateDeck();
 			Collections.shuffle(SetDeck.deck);
 			deal();
-			System.out.println("You have started a new round!");
+			System.out.println("You have started a new game!");
 			delay();
 			play();
 		}
@@ -55,9 +70,16 @@ public class Main
 		    System.out.println("Hello, " + name + "!");
 		    delay();
 		    System.out.println();
+		    if(name.equalsIgnoreCase("George")){
+		    	specialDeal();
+		    } else {
+		    	deal();
+		    }
 		}
 		
 		public static void deal(){
+			SetDeck.generateDeck();
+			Collections.shuffle(SetDeck.deck);
 			for(int i = 0; i < SetDeck.deck.size(); i++){
 				switch(i%3){
 					case 0:{
@@ -79,10 +101,59 @@ public class Main
 			Collections.sort(player3, new Sort());
 		}
 		
+		public static void specialDeal(){
+			SetDeck.generateDeck();
+			player1.add(SetDeck.deck.get(0));
+			player1.add(SetDeck.deck.get(13));
+			player1.add(SetDeck.deck.get(26));
+			player1.add(SetDeck.deck.get(39));
+			player1.add(SetDeck.deck.get(52));
+			player1.add(SetDeck.deck.get(53));
+			SetDeck.deck.remove(53);
+			SetDeck.deck.remove(52);
+			SetDeck.deck.remove(39);
+			SetDeck.deck.remove(26);
+			SetDeck.deck.remove(13);
+			SetDeck.deck.remove(0);
+			Collections.shuffle(SetDeck.deck);
+			int counter = 0;
+			for(int i = 0; i < SetDeck.deck.size(); i++){
+				switch(i%3){
+					case 0:{
+						if(counter>=4){
+							player1.add(SetDeck.deck.get(i));
+						} else if(i%2==0) {
+							player2.add(SetDeck.deck.get(i));
+							counter++;
+						} else {
+							player3.add(SetDeck.deck.get(i));
+							counter++;
+						}					
+						break;
+					}
+					case 1:{
+						player2.add(SetDeck.deck.get(i));
+						break;
+					}
+					case 2:{
+						player3.add(SetDeck.deck.get(i));
+						break;
+					}
+				}
+			}
+			Collections.sort(player1, new Sort());
+			Collections.sort(player2, new Sort());
+			Collections.sort(player3, new Sort());
+//			player2Cards();
+//			System.out.println();
+//			player3Cards();
+//			System.out.println();
+		}
+		
 		public static void play(){
 			while(!win){
 				int counter = 1;
-				System.out.println("Here are the cards you have rigth now:");
+				System.out.println("It's your turn! Here are the cards you have right now:");
 				for (Card c: player1){
 					if(c.getRank()==14 || c.getRank()==15){
 						System.out.println(counter + ". " + c.getFace());
@@ -95,7 +166,17 @@ public class Main
 				Scanner userInput = new Scanner(System.in);
 				String temp = userInput.nextLine();
 				
-				if(temp.equalsIgnoreCase("pass")){pass++;} else {
+				if(temp.equalsIgnoreCase("pass")){
+					System.out.println("You skipped this round.");
+					System.out.println();
+					pass.add(1);
+					} else if(temp.equalsIgnoreCase("Get me out")){
+						System.out.println("You just quit, " + name + "!");
+						delay();
+						System.out.println();
+						System.out.println("Thanks for playing though, hope to see you soon, bye!");
+						System.exit(0);
+					} else {
 					String[] input = temp.split(",");
 					
 					for(int i = 0; i < input.length; i++){
@@ -131,9 +212,7 @@ public class Main
 						//} else {
 						//	System.out.println("Error code: 4b");
 						//	Rules.illegal();
-						//}
-						
-						
+						//}												
 					}
 					
 					System.out.println();
@@ -150,14 +229,20 @@ public class Main
 						player1.remove(Integer.parseInt(input[i])-1);
 					}//remove selected cards from player arraylist
 				}				
-				delay();
-				System.out.println();
+				delay();			
 				Rules.checkwin();
 				Rules.checkPass();
-				
-				AI.player2AI();
-				
-				//AI.player3AI();
+				System.out.println();
+				//Rules.sysoarray();
+				Player2AI.player2AI();
+				//Rules.sysoarray();
+				delay();
+				Player3AI.player3AI();
+				//Rules.sysoarray();
+				int size = pass.size();
+				for(int i = 0; i < size; i++){
+		    		pass.remove(0);
+		    	} // clear the pass arraylist, so it resets
 			}
 		}
 		
@@ -165,5 +250,28 @@ public class Main
 			try{Thread.sleep(700);}
 			catch(InterruptedException e){e.printStackTrace();}
 		}
-
+		
+		public static void player2Cards(){
+			int counter = 1;
+			for (Card c: player2){
+				if(c.getRank()==14 || c.getRank()==15){
+					System.out.println(counter + ". " + c.getFace());
+				} else {
+					System.out.println(counter + ". " + c.getFace() + " of " + c.getSuit());
+				}											
+				counter++;
+			}
+		}
+		
+		public static void player3Cards(){
+			int counter = 1;
+			for (Card c: player3){
+				if(c.getRank()==14 || c.getRank()==15){
+					System.out.println(counter + ". " + c.getFace());
+				} else {
+					System.out.println(counter + ". " + c.getFace() + " of " + c.getSuit());
+				}											
+				counter++;
+		}
+		}
 	}

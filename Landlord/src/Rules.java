@@ -9,22 +9,24 @@ public class Rules
 					Main.a.add(Main.b.get(0)); 
 					Main.b.remove(0);
 					} else {
-					sysoarray();
+					//sysoarray();
 					System.out.println("Error code: 5b");
 					illegal();
 					}
 				}
 				if (Main.b.size()==2){
-					if(Main.b.get(0).getFace().equals(Main.b.get(1).getFace()) && Main.b.get(0).getRank()>Main.a.get(0).getRank()){
-						removea();
-						replace();
-						removeb();
-				    } else if ((Main.b.get(0).getRank() == 14 || Main.b.get(0).getRank() == 15) && ((Main.b.get(1).getRank() == 14 || Main.b.get(1).getRank() == 15))){
-				    	System.out.println("Wow! The biggest bomb in game, you can lead the new round.");
+					if((Main.b.get(0).getRank() == 14 || Main.b.get(0).getRank() == 15) && ((Main.b.get(1).getRank() == 14 || Main.b.get(1).getRank() == 15))){
+						System.out.println("Wow! The biggest bomb in game, you can lead the new round.");
 				    	removea();
 				    	removeb();
+				    	Main.play();
+				    } else if (Main.b.get(0).getFace().equals(Main.b.get(1).getFace()) && Main.b.get(0).getRank()>Main.a.get(0).getRank()){
+				    	removea();
+						replace();
+						removeb();
+				    	
 				    } else {
-				    	sysoarray();
+				    	//sysoarray();
 				    	System.out.println("Error code: 6b");
 				    	illegal();				    
 				    	}
@@ -35,7 +37,7 @@ public class Rules
 						replace();
 						removeb();
 					} else {
-						sysoarray();
+						//sysoarray();
 						System.out.println("Error code: 1b");
 						illegal();				
 					}
@@ -45,6 +47,11 @@ public class Rules
 						System.out.println("Wow! " + Main.b.get(0).getFace() + " bomb! You can start the new round.");
 						removea();
 						removeb();
+						Main.play();
+					} else {
+						//sysoarray();
+						System.out.println("Error code: 7b");
+						illegal();	
 					}
 				}
 			}
@@ -61,7 +68,7 @@ public class Rules
 				} else if((Main.c.get(0).getRank() == 14 || Main.c.get(0).getRank() == 15) && (Main.c.get(1).getRank() == 14 || Main.c.get(1).getRank() == 15)){
 					removec();
 					return 1;
-				} else{
+				} else {
 					removec();
 					return 0;
 				}					
@@ -95,19 +102,22 @@ public class Rules
 		}
 		
 		public static void removea(){
-			for(int i = 0; i < Main.a.size(); i++){
+			int temp = Main.a.size();
+			for(int i = 0; i < temp; i++){
 	    		Main.a.remove(0);
 	    	}
 		}
 		
 		public static void removeb(){
-			for(int i = 0; i < Main.b.size(); i++){
+			int temp = Main.b.size();
+			for(int i = 0; i < temp; i++){
 	    		Main.b.remove(0);
 	    	}
 		}
 		
 		public static void removec(){
-			for(int i = 0; i < Main.c.size(); i++){
+			int temp = Main.c.size();
+			for(int i = 0; i < temp; i++){
 	    		Main.c.remove(0);
 	    	}
 		}
@@ -120,9 +130,9 @@ public class Rules
 		
 		public static void checkwin(){
 			if(Main.player1.size()==0){
-				Main.win = true;
-				System.out.println("You have no cards left, you just won the game!");
-				System.out.println("Do you want to play again? Type \"Yes\" to continue, \"No\"to exit.");
+				//Main.win = true;
+				
+				System.out.println("Congratulations! You have no cards left, you just won the game!");		
 				checkContinue();
 			}
 			if(Main.player2.size()==0){Main.win = true; System.out.println("Player2 bot just won the game... Better luck next time."); checkContinue();}
@@ -130,6 +140,7 @@ public class Rules
 		}
 		
 		public static void checkContinue(){
+			System.out.println("Do you want to play again? Type \"Yes\" to continue, \"No\"to exit.");
 			Scanner userInput = new Scanner(System.in);
 			String keepPlaying = userInput.nextLine();
 			if (keepPlaying.equalsIgnoreCase("Yes")){
@@ -144,12 +155,45 @@ public class Rules
 		}
 		
 		public static void checkPass(){
-			if(Main.pass==2){
+			if(Main.pass.size()==2){
 				removea();
 				removeb();
-				System.out.println("All players have passed. Nobody has bigger cards. The next person can lead a new round!");
-				System.out.println();
-			}
+				removec();
+				boolean player1 = false;
+				boolean player2 = false;
+				boolean player3 = false;
+				for(Integer s: Main.pass){
+					if(s==1){player1=true;}
+					if(s==2){player2=true;}
+					if(s==3){player3=true;}
+				}
+				int temp = Main.pass.size();
+				for(int i = 0; i < temp; i++){
+		    		Main.pass.remove(0);
+		    	} // clear the pass arraylist, so it resets
+				if(player1==false){
+					Main.delay();
+					System.out.println("All players have passed. Nobody has bigger cards. You won this round and can lead the new round!");
+					System.out.println();
+					Main.delay();
+					Main.play();
+				} else if(player2==false){
+					Main.delay();
+					System.out.println("All players have passed. Nobody has bigger cards. Player2 Bot won this round and can lead the new round!");
+					System.out.println();
+					Main.delay();
+					Player2AI.player2AI();
+					Player3AI.player3AI();
+					Main.play();
+				} else {
+					Main.delay();
+					System.out.println("All players have passed. Nobody has bigger cards. Player3 Bot won this round and can lead the new round!");
+					System.out.println();
+					Main.delay();
+					Player3AI.player3AI();
+					Main.play();
+				}							
+			}		
 		}
 		
 		public static void sysoarray(){
@@ -173,6 +217,8 @@ public class Rules
 				}											
 				counter1++;
 			}
+			System.out.println();
 		}
+		
 	}
 	
