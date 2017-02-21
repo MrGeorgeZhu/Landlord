@@ -11,6 +11,7 @@ public class Main
 		static ArrayList <Card> c = new ArrayList <Card>();
 		static boolean win = false;
 		static ArrayList <Integer> pass = new ArrayList <Integer>();
+		static String[] input;
 		public static void main(String[] args)
 			{		
 			    greeting(); 
@@ -45,11 +46,10 @@ public class Main
 			for(int i = 0; i < temp; i++){
 	    		SetDeck.deck.remove(0);
 	    	}
-			SetDeck.generateDeck();
-			Collections.shuffle(SetDeck.deck);
 			deal();
 			System.out.println("You have started a new game!");
 			delay();
+			System.out.println();
 			play();
 		}
 		
@@ -151,7 +151,7 @@ public class Main
 		}
 		
 		public static void play(){
-			while(!win){
+			while(!win){		
 				int counter = 1;
 				System.out.println("It's your turn! Here are the cards you have right now:");
 				for (Card c: player1){
@@ -167,6 +167,8 @@ public class Main
 				String temp = userInput.nextLine();
 				
 				if(temp.equalsIgnoreCase("pass")){
+					delay();
+					System.out.println();
 					System.out.println("You skipped this round.");
 					System.out.println();
 					pass.add(1);
@@ -177,22 +179,22 @@ public class Main
 						System.out.println("Thanks for playing though, hope to see you soon, bye!");
 						System.exit(0);
 					} else {
-					String[] input = temp.split(",");
+					input = temp.split(",");
 					
 					for(int i = 0; i < input.length; i++){
 						if(Integer.parseInt(input[i])>=1 && Integer.parseInt(input[i])<=player1.size()){} //Need to have a solution for letters input
 						else{
 							System.out.println("Error code: 2b");
-							Rules.illegal();
-								
+							Rules.illegal();							
 						}
 					}//Check for illegal input
-					
+					Rules.removec();
 					for(int i = 0; i < input.length; i++){
 						c.add(player1.get(Integer.parseInt(input[i])-1));
 					}//pass cards to arraylist c
 					
 					if(a.size()==0){
+						
 						if(Rules.check()==1){
 							for(int i = 0; i < input.length; i++){
 								a.add(player1.get(Integer.parseInt(input[i])-1));
@@ -239,15 +241,20 @@ public class Main
 				delay();
 				Player3AI.player3AI();
 				//Rules.sysoarray();
-				int size = pass.size();
-				for(int i = 0; i < size; i++){
-		    		pass.remove(0);
-		    	} // clear the pass arraylist, so it resets
+				if(pass.size()!=0 && (pass.get(0)==3 || pass.get(0)==2)){
+					
+				}else{
+					int size = pass.size();
+					for(int i = 0; i < size; i++){
+			    		pass.remove(0);
+			    	} // clear the pass arraylist, so it resets
+				}			
+				delay();
 			}
 		}
 		
 		public static void delay(){
-			try{Thread.sleep(700);}
+			try{Thread.sleep(1500);} //700
 			catch(InterruptedException e){e.printStackTrace();}
 		}
 		

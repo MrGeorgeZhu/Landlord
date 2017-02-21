@@ -31,9 +31,7 @@ public class Player3AI {
 				    }
 			}
 			if(index == -1){
-				System.out.println("Player3 passes.");
-				System.out.println();
-				Main.pass.add(3);
+				pass();
 			} else {
 				Main.b.add(Main.player3.get(index));
 				Rules.o();
@@ -63,9 +61,7 @@ public class Player3AI {
 			}
 			
 			if(index1==-1){
-				System.out.println("Player3 passes.");
-				System.out.println();
-				Main.pass.add(3);
+				pass();
 			} else {
 				Main.b.add(Main.player3.get(index1));
 				Main.b.add(Main.player3.get(index2));
@@ -95,9 +91,7 @@ public class Player3AI {
 			}
 			
 			if(index1==-1){
-				System.out.println("Player3 passes.");
-				System.out.println();
-				Main.pass.add(3);
+				pass();
 			} else {
 				Main.b.add(Main.player3.get(index1));
 				Main.b.add(Main.player3.get(index2));
@@ -114,12 +108,20 @@ public class Player3AI {
 			}
 						
 		} else {
-			System.out.println("Player3 passes.");
-			System.out.println();
-			Main.pass.add(3);
+			pass();
 		}
 		Rules.checkwin();
 		//if(Main.player3.size()==0){System.out.println("Player3 bot just won the game... Better luck next time.");}
 		Rules.checkPass();				
 }
+	public static void pass(){
+		System.out.println("Player3 passes.");
+		System.out.println();
+		if(Main.pass.size()!=0 && Main.pass.get(0)==3){
+			
+		} else {
+			Main.pass.add(3);
+		}
+		
+	}
 }

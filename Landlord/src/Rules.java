@@ -16,9 +16,14 @@ public class Rules
 				}
 				if (Main.b.size()==2){
 					if((Main.b.get(0).getRank() == 14 || Main.b.get(0).getRank() == 15) && ((Main.b.get(1).getRank() == 14 || Main.b.get(1).getRank() == 15))){
+						Main.delay();
 						System.out.println("Wow! The biggest bomb in game, you can lead the new round.");
+						System.out.println();
 				    	removea();
 				    	removeb();
+				    	Main.player1.remove(1);
+				    	Main.player1.remove(0);
+				    	Main.delay();
 				    	Main.play();
 				    } else if (Main.b.get(0).getFace().equals(Main.b.get(1).getFace()) && Main.b.get(0).getRank()>Main.a.get(0).getRank()){
 				    	removea();
@@ -47,6 +52,11 @@ public class Rules
 						System.out.println("Wow! " + Main.b.get(0).getFace() + " bomb! You can start the new round.");
 						removea();
 						removeb();
+						System.out.println();
+						for(int i = Main.input.length-1; i>=0; i--){
+							Main.player1.remove(Integer.parseInt(Main.input[i])-1);
+						}
+						Main.delay();
 						Main.play();
 					} else {
 						//sysoarray();
@@ -58,28 +68,28 @@ public class Rules
 			
 		public static int check(){
 			if(Main.c.size()==1){
-				removec();
+				//removec();
 				return 1;
 			}
 			if(Main.c.size()==2){
 				if(Main.c.get(0).getFace().equals(Main.c.get(1).getFace())){
-					removec();
+					//removec();
 					return 1;
 				} else if((Main.c.get(0).getRank() == 14 || Main.c.get(0).getRank() == 15) && (Main.c.get(1).getRank() == 14 || Main.c.get(1).getRank() == 15)){
-					removec();
+					//removec();
 					return 1;
 				} else {
-					removec();
+					//removec();
 					return 0;
 				}					
 			} else if (Main.c.size()==3 && Main.c.get(0).getFace().equals(Main.c.get(1).getFace()) && Main.c.get(1).getFace().equals(Main.c.get(2).getFace())){
-				removec();
+				//removec();
 				return 1;			
-			} else if(Main.c.size()==4 && Main.c.get(0).getFace().equals(Main.c.get(1).getFace()) && Main.c.get(1).getFace().equals(Main.c.get(2).getFace()) &&  Main.c.get(1).getFace().equals(Main.c.get(2).getFace()) && Main.c.get(2).getFace().equals(Main.c.get(3).getFace())){
-				removec();
+			} else if(Main.c.size()==4 && Main.c.get(0).getFace().equals(Main.c.get(1).getFace()) && Main.c.get(1).getFace().equals(Main.c.get(2).getFace()) &&  Main.c.get(2).getFace().equals(Main.c.get(3).getFace())){
+				//removec();
 				return 1;
 			} else {
-				removec();
+				//removec();
 			    return 0;
 			}			
 		}
@@ -93,10 +103,10 @@ public class Rules
 			System.out.println("2. Double(2 of a kind)");
 			System.out.println("3. Trio(3 of a kind)");
 			System.out.println("4. Bomb(4 of a kind or 2 jokers)");
-			System.out.println("The move you make have to follow the previous pattern and be bigger than it.");
-			Main.delay();
+			System.out.println("The move you make have to follow the previous pattern and be bigger than it.");		
 			System.out.println();
 			removeb();
+			Main.delay();
 			Main.play(); 
 			System.out.println();
 		}
@@ -140,7 +150,7 @@ public class Rules
 		}
 		
 		public static void checkContinue(){
-			System.out.println("Do you want to play again? Type \"Yes\" to continue, \"No\"to exit.");
+			System.out.println("Do you want to play again? Type \"Yes\" to continue, \"No\" to exit.");
 			Scanner userInput = new Scanner(System.in);
 			String keepPlaying = userInput.nextLine();
 			if (keepPlaying.equalsIgnoreCase("Yes")){

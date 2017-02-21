@@ -125,9 +125,7 @@ public class Player2AI {
 				}
 							
 			} else {
-				System.out.println("Player2 passes.");
-				System.out.println();
-				Main.pass.add(2);
+				pass();
 			}
 			Rules.checkwin();
 			//if(Main.player2.size()==0){System.out.println("Player2 bot just won the game... Better luck next time.");}
@@ -170,6 +168,11 @@ public class Player2AI {
 	public static void pass(){
 		System.out.println("Player2 passes.");
 		System.out.println();
-		Main.pass.add(2);
+		if(Main.pass.size()!=0 && Main.pass.get(0)==2){
+			
+		} else {
+			Main.pass.add(2);
+		}
+		
 	}
 }
