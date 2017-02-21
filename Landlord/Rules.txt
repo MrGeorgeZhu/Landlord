@@ -1,0 +1,11 @@
+Goal: Get rid of all your cards first.
+
+1. Single
+2. Double(2 of a kind)
+3. Trio(3 of a kind)
+4. Bomb(4 of a kind & 2 jokers)
+The move you make have to follow the previous pattern and be bigger than it.
+If the other two players do not have bigger cards, the current player gets to lead the next round.
+
+*The cards are sorted from the biggest to smallest for your convenience.
+*The suit of the card does not really matter in this game.
